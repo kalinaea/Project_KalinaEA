@@ -12,10 +12,7 @@ import static app.Colors.PANEL_BACKGROUND_COLOR;
  * Панель управления
  */
 public class PanelRendering extends GridPanel {
-    /**
-     * Заголовок
-     */
-    private final Label label;
+
 
     /**
      * Панель управления
@@ -37,9 +34,6 @@ public class PanelRendering extends GridPanel {
     ) {
         super(window, drawBG, color, padding, gridWidth, gridHeight, gridX, gridY, colspan, rowspan);
 
-        // создаём первый заголовок
-        label = new Label(window, false, PANEL_BACKGROUND_COLOR, PANEL_PADDING,
-                1, 1, 0, 0, 1, 1, "Панель управления", true, true);
 
 
     }
@@ -62,6 +56,6 @@ public class PanelRendering extends GridPanel {
      */
     @Override
     public void paintImpl(Canvas canvas, CoordinateSystem2i windowCS) {
-        label.paint(canvas, windowCS);
+
     }
 }
