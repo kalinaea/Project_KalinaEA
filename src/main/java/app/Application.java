@@ -1,6 +1,5 @@
 package app;
 
-import controls.Label;
 import io.github.humbleui.jwm.*;
 import io.github.humbleui.jwm.skija.EventFrameSkija;
 import io.github.humbleui.skija.Canvas;
@@ -139,6 +138,9 @@ public class Application implements Consumer<Event> {
             Surface s = ee.getSurface();
             paint(s.getCanvas(), new CoordinateSystem2i(s.getWidth(), s.getHeight()));
         }
+        panelControl.accept(e);
+        panelRendering.accept(e);
+        panelLog.accept(e);
     }
 
     /**
