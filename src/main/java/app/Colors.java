@@ -7,6 +7,10 @@ import misc.Misc;
  */
 public class Colors {
     /**
+     * Цвет текста
+     */
+    public static final int MULTILINE_TEXT_COLOR = Misc.getColor(64, 255, 255, 255);
+    /**
      * цвет фона
      */
     public static final int APP_BACKGROUND_COLOR = Misc.getColor(255, 38, 70, 83);
