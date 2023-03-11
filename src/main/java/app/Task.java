@@ -59,6 +59,13 @@ public class Task {
     }
 
     /**
+     * Очистить задачу
+     */
+    public void clear() {
+        points.clear();
+    }
+
+    /**
      * Рисование задачи
      *
      * @param canvas   область рисования
@@ -140,5 +147,18 @@ public class Task {
             else
                 addPoint(pos, Point.PointSet.SECOND_SET);
         }
+    }
+
+    /**
+     * Решить задачу
+     */
+    public void solve() {
+        PanelLog.warning("Вызван метод solve()\n Пока что решения нет");
+    }
+    /**
+     * Отмена решения задачи
+     */
+    public void cancel() {
+
     }
 }
