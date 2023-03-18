@@ -59,6 +59,11 @@ public class Task {
      */
     protected CoordinateSystem2i lastWindowCS;
 
+    /**
+     * Флаг, решена ли задача
+     */
+    private boolean solved;
+
     public Task(
             @JsonProperty("ownCS") CoordinateSystem2d ownCS,
             @JsonProperty("points") ArrayList<Point> points
@@ -72,6 +77,7 @@ public class Task {
      */
     public void clear() {
         points.clear();
+        solved = false;
     }
 
     /**
@@ -123,6 +129,7 @@ public class Task {
      * @param pointSet множество
      */
     public void addPoint(Vector2d pos, Point.PointSet pointSet) {
+        solved = false;
         Point newPoint = new Point(pos, pointSet);
         points.add(newPoint);
         // Добавляем в лог запись информации
@@ -140,7 +147,7 @@ public class Task {
      * Отмена решения задачи
      */
     public void cancel() {
-
+        solved = false;
     }
 
 
@@ -171,5 +178,15 @@ public class Task {
             else
                 addPoint(pos, Point.PointSet.SECOND_SET);
         }
+    }
+
+
+    /**
+     * проверка, решена ли задача
+     *
+     * @return флаг
+     */
+    public boolean isSolved() {
+        return solved;
     }
 }
