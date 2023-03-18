@@ -99,13 +99,6 @@ public class PanelRendering extends GridPanel {
         task.paint(canvas, windowCS);
     }
 
-    /**
-     * Загрузить файл
-     */
-    public static void load() {
-        PanelLog.info("load");
-    }
-
 
     /**
      * Сохранить файл
@@ -119,5 +112,32 @@ public class PanelRendering extends GridPanel {
         } catch (IOException e) {
             PanelLog.error("не получилось записать файл \n" + e);
         }
+    }
+
+
+    /**
+     * Загружаем из файла
+     *
+     * @param path путь к файлу
+     */
+    public static void loadFromFile(String path) {
+        // создаём загрузчик JSON
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            // считываем систему координат
+            task = objectMapper.readValue(new File(path), Task.class);
+            PanelLog.success("Файл " + path + " успешно загружен");
+        } catch (IOException e) {
+            PanelLog.error("Не получилось прочитать файл " + path + "\n" + e);
+        }
+    }
+
+    /**
+     * Загрузить файл
+     */
+    public static void load() {
+        String path = "src/main/resources/conf.json";
+        PanelLog.info("load from " + path);
+        loadFromFile(path);
     }
 }
