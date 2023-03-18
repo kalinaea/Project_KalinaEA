@@ -2,6 +2,7 @@ package panels;
 
 import app.Point;
 import app.Task;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.humbleui.jwm.Event;
 import io.github.humbleui.jwm.EventMouseButton;
 import io.github.humbleui.jwm.Window;
@@ -10,6 +11,8 @@ import misc.CoordinateSystem2d;
 import misc.CoordinateSystem2i;
 import misc.Vector2d;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -95,17 +98,26 @@ public class PanelRendering extends GridPanel {
     public void paintImpl(Canvas canvas, CoordinateSystem2i windowCS) {
         task.paint(canvas, windowCS);
     }
-    /**
-     * Сохранить файл
-     */
-    public static void save() {
-        PanelLog.info("save");
-    }
 
     /**
      * Загрузить файл
      */
     public static void load() {
         PanelLog.info("load");
+    }
+
+
+    /**
+     * Сохранить файл
+     */
+    public static void save() {
+        String path = "src/main/resources/conf.json";
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.writeValue(new File(path), task);
+            PanelLog.success("Файл " + path + " успешно сохранён");
+        } catch (IOException e) {
+            PanelLog.error("не получилось записать файл \n" + e);
+        }
     }
 }

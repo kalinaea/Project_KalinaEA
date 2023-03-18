@@ -1,10 +1,13 @@
 package app;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.github.humbleui.jwm.MouseButton;
 import io.github.humbleui.skija.Canvas;
 import io.github.humbleui.skija.Paint;
 import io.github.humbleui.skija.Rect;
+import lombok.Getter;
 import misc.CoordinateSystem2d;
 import misc.CoordinateSystem2i;
 import misc.Vector2d;
@@ -17,6 +20,7 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * Класс задачи
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
 public class Task {
     /**
      * Текст задачи
@@ -35,10 +39,12 @@ public class Task {
     /**
      * Вещественная система координат задачи
      */
+    @Getter
     private final CoordinateSystem2d ownCS;
     /**
      * Список точек
      */
+    @Getter
     private final ArrayList<Point> points;
 
     /**
@@ -53,7 +59,10 @@ public class Task {
      */
     protected CoordinateSystem2i lastWindowCS;
 
-    public Task(CoordinateSystem2d ownCS, ArrayList<Point> points) {
+    public Task(
+            @JsonProperty("ownCS") CoordinateSystem2d ownCS,
+            @JsonProperty("points") ArrayList<Point> points
+    ) {
         this.ownCS = ownCS;
         this.points = points;
     }
@@ -120,6 +129,21 @@ public class Task {
         PanelLog.info("точка " + newPoint + " добавлена в " + newPoint.getSetName());
     }
 
+
+    /**
+     * Решить задачу
+     */
+    public void solve() {
+        PanelLog.warning("Вызван метод solve()\n Пока что решения нет");
+    }
+    /**
+     * Отмена решения задачи
+     */
+    public void cancel() {
+
+    }
+
+
     /**
      * Добавить случайные точки
      *
@@ -147,18 +171,5 @@ public class Task {
             else
                 addPoint(pos, Point.PointSet.SECOND_SET);
         }
-    }
-
-    /**
-     * Решить задачу
-     */
-    public void solve() {
-        PanelLog.warning("Вызван метод solve()\n Пока что решения нет");
-    }
-    /**
-     * Отмена решения задачи
-     */
-    public void cancel() {
-
     }
 }

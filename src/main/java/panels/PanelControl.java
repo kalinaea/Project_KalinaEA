@@ -209,7 +209,7 @@ public class PanelControl extends GridPanel {
             }
 
             // событие нажатия мыши
-        } else if (e instanceof EventMouseButton) {
+        } else if (e instanceof EventMouseButton ee) {
             if (!lastInside)
                 return;
 
@@ -217,7 +217,8 @@ public class PanelControl extends GridPanel {
 
             // пробуем кликнуть по всем кнопкам
             for (Button button : buttons) {
-                button.click(relPos);
+                if(ee.isPressed())
+                    button.click(relPos);
             }
 
             // перебираем поля ввода
