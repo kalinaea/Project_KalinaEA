@@ -77,6 +77,9 @@ public class PanelControl extends GridPanel {
                 window, false, backgroundColor, PANEL_PADDING,
                 6, 7, 0, 0, 6, 2, Task.TASK_TEXT,
                 false, true);
+
+
+
         // добавление вручную
         Label xLabel = new Label(window, false, backgroundColor, PANEL_PADDING,
                 6, 7, 0, 2, 1, 1, "X", true, true);
@@ -111,11 +114,11 @@ public class PanelControl extends GridPanel {
         });
         buttons.add(addToFirstSet);
 
-        Button addToSecondSet = new Button(
+        Button addPoints = new Button(
                 window, false, backgroundColor, PANEL_PADDING,
-                6, 7, 3, 3, 3, 1, "Добавить во второе\nмножество",
+                6, 7, 3, 4, 3, 1, "Добавить точку",
                 true, true);
-        addToSecondSet.setOnClick(() -> {
+        addPoints.setOnClick(() -> {
             // если числа введены верно
             if (!xField.hasValidDoubleValue()) {
                 PanelLog.warning("X координата введена неверно");
@@ -127,22 +130,27 @@ public class PanelControl extends GridPanel {
                 );
             }
         });
-        buttons.add(addToSecondSet);
+        buttons.add(addPoints);
+
+
 
         // случайное добавление
         Label cntLabel = new Label(window, false, backgroundColor, PANEL_PADDING,
                 6, 7, 0, 4, 1, 1, "Кол-во", true, true);
         labels.add(cntLabel);
 
+
         Input cntField = InputFactory.getInput(window, false, FIELD_BACKGROUND_COLOR, PANEL_PADDING,
                 6, 7, 1, 4, 2, 1, "5", true,
                 FIELD_TEXT_COLOR, true);
         inputs.add(cntField);
 
-        Button addPoints = new Button(
+
+        Button addRandomPoints = new Button(
                 window, false, backgroundColor, PANEL_PADDING,
                 6, 7, 3, 4, 3, 1, "Добавить\nслучайные точки",
                 true, true);
+
         addPoints.setOnClick(() -> {
             // если числа введены верно
             if (!cntField.hasValidIntValue()) {
@@ -151,6 +159,54 @@ public class PanelControl extends GridPanel {
                 PanelRendering.task.addRandomPoints(cntField.intValue());
         });
         buttons.add(addPoints);
+
+
+
+        //задание треугольника вручную
+        Label x_triangle_Label = new Label(window, false, backgroundColor, PANEL_PADDING,
+                6, 7, 0, 2, 1, 1, "X", true, true);
+        labels.add(x_triangle_Label);
+        Input x_triangle_Field = InputFactory.getInput(window, false, FIELD_BACKGROUND_COLOR, PANEL_PADDING,
+                6, 7, 1, 2, 2, 1, "0.0", true,
+                FIELD_TEXT_COLOR, true);
+        inputs.add(x_triangle_Field);
+        Label y_triangle_Label = new Label(window, false, backgroundColor, PANEL_PADDING,
+                6, 7, 3, 2, 1, 1, "Y", true, true);
+        labels.add(y_triangle_Label);
+        Input y_triangle_Field = InputFactory.getInput(window, false, FIELD_BACKGROUND_COLOR, PANEL_PADDING,
+                6, 7, 4, 2, 2, 1, "0.0", true,
+                FIELD_TEXT_COLOR, true);
+        inputs.add(y_triangle_Field);
+
+        buttons = new ArrayList<>();
+
+        Button addTriangle = new Button(
+                window, false, backgroundColor, PANEL_PADDING,
+                6, 7, 20, 3, 4, 1, "Задать треугольник",
+                true, true);
+
+
+
+
+        //случайный трегольник
+        Label cnt_triangle_Label = new Label(window, false, backgroundColor, PANEL_PADDING,
+                6, 7, 0, 4, 1, 1, "Кол-во", true, true);
+        labels.add(cnt_triangle_Label);
+
+
+        Input cnt_triangle_Field = InputFactory.getInput(window, false, FIELD_BACKGROUND_COLOR, PANEL_PADDING,
+                6, 7, 1, 4, 2, 1, "5", true,
+                FIELD_TEXT_COLOR, true);
+        inputs.add(cnt_triangle_Field);
+
+
+        Button addRandomTriangle = new Button(
+                window, false, backgroundColor, PANEL_PADDING,
+                6, 7, 3, 4, 3, 1, "Случайный треугольник",
+                true, true);
+
+
+
 
 
         // управление
