@@ -53,11 +53,8 @@ public class PanelRendering extends GridPanel {
         // создаём массив случайных точек
         ArrayList<Point> points = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            // получаем случайное множество
-            Point.PointSet pointSet = ThreadLocalRandom.current().nextBoolean() ?
-                    Point.PointSet.FIRST_SET : Point.PointSet.SECOND_SET;
             // добавляем точку в случайном месте ОСК в указанное множество
-            points.add(new Point(cs.getRandomCoords(), pointSet));
+            points.add(new Point(cs.getRandomCoords()));
         }
         task = new Task(cs, points);
 
