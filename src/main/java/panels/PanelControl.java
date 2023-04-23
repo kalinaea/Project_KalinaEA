@@ -111,7 +111,7 @@ public class PanelControl extends GridPanel {
 
         Button addRandomPoints = new Button(
                 window, false, backgroundColor, PANEL_PADDING,
-                6, 10, 3, 4, 2, 1, "Добавить\nслучайные точки",
+                6, 9, 3, 4, 2, 1, "Добавить\nслучайные точки",
                 true, true);
 
         addRandomPoints.setOnClick(() -> {
@@ -122,8 +122,6 @@ public class PanelControl extends GridPanel {
                 PanelRendering.task.addRandomPoints(cntField.intValue());
         });
         buttons.add(addRandomPoints);
-
-
 
 
 

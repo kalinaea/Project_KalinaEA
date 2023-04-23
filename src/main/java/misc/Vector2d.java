@@ -73,10 +73,12 @@ public class Vector2d {
      * Вычесть вектор из текущего
      *
      * @param v вектор, который нужно вычесть
+     * @return
      */
-    public void subtract(Vector2d v) {
+    public Vector2d subtract(Vector2d v) {
         this.x = this.x - v.x;
         this.y = this.y - v.y;
+        return v;
     }
 
     /**
