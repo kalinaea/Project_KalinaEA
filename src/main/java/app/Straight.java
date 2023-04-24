@@ -18,7 +18,9 @@ public class Straight {
     /**
      * Конструктор прямой
      *
-     * @param pos1 положение прямой
+     * @param pos1
+     * @param pos2
+     * положение прямой
      */
     public Straight(@JsonProperty("pos") Vector2d pos1, Vector2d pos2) {
         this.pos1 = pos1;
