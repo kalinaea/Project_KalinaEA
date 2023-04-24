@@ -16,7 +16,6 @@ import misc.Vector2i;
 import panels.PanelLog;
 
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
 
 import static app.Colors.CROSSED_COLOR;
 import static app.Colors.SUBTRACTED_COLOR;
@@ -87,13 +86,17 @@ public class Task {
     @JsonIgnore
     private final ArrayList<Point> single;
 
+    @Getter
+    Triangle triangle;
 
     public Task(
             @JsonProperty("ownCS") CoordinateSystem2d ownCS,
-            @JsonProperty("points") ArrayList<Point> points
+            @JsonProperty("points") ArrayList<Point> points,
+            @JsonProperty("triangle") Triangle triangle
     ) {
         this.ownCS = ownCS;
         this.points = points;
+        this.triangle = triangle;
         this.crossed = new ArrayList<>();
         this.single = new ArrayList<>();
     }
@@ -104,6 +107,7 @@ public class Task {
     public void clear() {
         points.clear();
         solved = false;
+        triangle = null;
     }
 
     /**
@@ -120,6 +124,8 @@ public class Task {
         canvas.save();
         // создаём перо
         try (var paint = new Paint()) {
+            if (triangle != null)
+                triangle.render(canvas, windowCS, ownCS);
             for (Point p : points) {
                 if (!solved) {
                     paint.setColor(p.getColor());
@@ -157,10 +163,11 @@ public class Task {
             addPoint(taskPos);
         }
     }
+
     /**
      * Добавить точку
      *
-     * @param pos      положение
+     * @param pos положение
      */
     public void addPoint(Vector2d pos) {
         solved = false;
@@ -187,7 +194,7 @@ public class Task {
                 Point b = points.get(j);
                 // если точки совпадают по положению
                 if (a.pos.equals(b.pos)) {
-                    if (!crossed.contains(a)){
+                    if (!crossed.contains(a)) {
                         crossed.add(a);
                         crossed.add(b);
                     }
@@ -203,6 +210,7 @@ public class Task {
         // задача решена
         solved = true;
     }
+
     /**
      * Отмена решения задачи
      */
@@ -233,7 +241,7 @@ public class Task {
             // получаем координаты в СК задачи
             Vector2d pos = ownCS.getCoords(gridPos, addGrid);
             // сработает примерно в половине случаев
-                addPoint(pos);
+            addPoint(pos);
         }
     }
 
@@ -245,5 +253,28 @@ public class Task {
      */
     public boolean isSolved() {
         return solved;
+    }
+
+    public void setRandomTriangle() {
+        Vector2d tA = ownCS.getRandomCoords();
+
+
+    }
+
+
+    Vector2d posA;
+    Vector2d posB;
+
+    public void addTrianglePoint(double x, double y) {
+        if (posA == null) {
+            posA = new Vector2d(x, y);
+        } else if (posB == null) {
+            posB = new Vector2d(x, y);
+        } else {
+            Vector2d posC = new Vector2d(x, y);
+            triangle = new Triangle(posA, posB, posC);
+            posA = null;
+            posB = null;
+        }
     }
 }

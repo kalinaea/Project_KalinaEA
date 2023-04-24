@@ -50,16 +50,8 @@ public class PanelRendering extends GridPanel {
                 new Vector2d(-10.0, -10.0), new Vector2d(10.0, 10.0)
         );
 
-        // создаём массив случайных точек
-        ArrayList<Point> points = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            // добавляем точку в случайном месте ОСК в указанное множество
-            points.add(new Point(cs.getRandomCoords()));
-        }
-        task = new Task(cs, points);
-
         // создаём задачу без точек
-        task = new Task(cs, new ArrayList<>());
+        task = new Task(cs, new ArrayList<>(), null);
         // добавляем в нё 10 случайных
         task.addRandomPoints(10);
     }
@@ -76,11 +68,11 @@ public class PanelRendering extends GridPanel {
         // если событие - это клик мышью
         if (e instanceof EventMouseButton ee) {
             // если последнее положение мыши сохранено и курсор был внутри
-            if (lastMove != null && lastInside){
+            if (lastMove != null && lastInside) {
                 // если событие - нажатие мыши
                 if (ee.isPressed())
-                // обрабатываем клик по задаче
-                task.click(lastWindowCS.getRelativePos(lastMove), ee.getButton());
+                    // обрабатываем клик по задаче
+                    task.click(lastWindowCS.getRelativePos(lastMove), ee.getButton());
             }
         }
     }
