@@ -55,6 +55,21 @@ public class Task {
     @Getter
     private final ArrayList<Point> points;
 
+
+    /**
+     * Список прямых
+     */
+    @Getter
+    private final ArrayList<Line> lines;
+
+
+
+    /**
+     * Список треугольников
+     */
+    @Getter
+    private final ArrayList<Triangle> triangles;
+
     /**
      * Задача
      *
@@ -86,20 +101,28 @@ public class Task {
     @JsonIgnore
     private final ArrayList<Point> single;
 
+
+
     @Getter
     Triangle triangle;
+
 
     public Task(
             @JsonProperty("ownCS") CoordinateSystem2d ownCS,
             @JsonProperty("points") ArrayList<Point> points,
-            @JsonProperty("triangle") Triangle triangle
+            @JsonProperty("triangles") ArrayList<Triangle> triangles,
+            @JsonProperty("lines") ArrayList<Line> lines
+
     ) {
         this.ownCS = ownCS;
         this.points = points;
-        this.triangle = triangle;
+        this.triangles = triangles;
+        this.lines = lines;
         this.crossed = new ArrayList<>();
         this.single = new ArrayList<>();
     }
+
+
 
     /**
      * Очистить задачу
@@ -258,12 +281,12 @@ public class Task {
     public void setRandomTriangle() {
         Vector2d tA = ownCS.getRandomCoords();
 
-
     }
 
 
     Vector2d posA;
     Vector2d posB;
+
 
     public void addTrianglePoint(double x, double y) {
         if (posA == null) {
