@@ -2,8 +2,10 @@ package app;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import misc.Misc;
-import misc.Vector2d;
+import io.github.humbleui.skija.Canvas;
+import io.github.humbleui.skija.Paint;
+import lombok.Getter;
+import misc.*;
 
 import java.util.Objects;
 
@@ -11,7 +13,9 @@ public class Line {
     /**
      * две точки прямой
      */
+    @Getter
     public Vector2d pos1;
+    @Getter
     public Vector2d pos2;
 
 
@@ -103,6 +107,35 @@ public class Line {
         // приводим переданный в параметрах объект к текущему классу
         Line line = (Line) o;
         return Objects.equals(line, o);
+    }
+
+
+    /**
+     * Рисование прямой
+     * @param canvas
+     * @param windowCS
+     * @param ownCS
+     */
+    public void render(Canvas canvas, CoordinateSystem2i windowCS, CoordinateSystem2d ownCS) {
+        try (Paint p = new Paint()) {
+            // опорные точки прямой
+            Vector2i pointA = windowCS.getCoords(pos1, ownCS);
+            Vector2i pointB = windowCS.getCoords(pos2, ownCS);
+
+            // вектор, ведущий из точки A в точку B
+            Vector2i delta = Vector2i.subtract(pointA, pointB);
+
+            // получаем максимальную длину отрезка на экране, как длину диагонали экрана
+            int maxDistance = (int) windowCS.getSize().length();
+
+            // получаем новые точки для рисования, которые гарантируют, что линия
+            // будет нарисована до границ экрана
+            Vector2i renderPointA = Vector2i.sum(pointA, Vector2i.mult(delta, maxDistance));
+            Vector2i renderPointB = Vector2i.sum(pointA, Vector2i.mult(delta, -maxDistance));
+
+            // рисуем линию
+            canvas.drawLine(renderPointA.x, renderPointA.y, renderPointB.x, renderPointB.y, p);
+        }
     }
 
 

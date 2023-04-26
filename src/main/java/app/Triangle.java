@@ -53,6 +53,13 @@ public class Triangle {
         return Misc.getColor(0xCC, 0x00, 0x00, 0xFF);
     }
 
+
+    /**
+     * Рисование треугольника
+     * @param canvas
+     * @param windowCS
+     * @param ownCS
+     */
     public void render(Canvas canvas, CoordinateSystem2i windowCS, CoordinateSystem2d ownCS) {
         try (Paint p = new Paint()) {
             // вершины треугольника

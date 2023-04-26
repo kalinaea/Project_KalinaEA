@@ -159,4 +159,16 @@ public class Vector2i {
         result = 31 * result + y;
         return result;
     }
+
+
+    /**
+     * Умножение вектора на число
+     *
+     * @param v вектор
+     * @param s число
+     * @return результат умножения
+     */
+    public static Vector2i mult(Vector2i v, int s) {
+        return new Vector2i(v.x * s, v.y * s);
+    }
 }

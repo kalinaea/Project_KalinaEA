@@ -140,29 +140,18 @@ public class Task {
      * @param windowCS СК окна
      */
 
-    public void paint(Canvas canvas, CoordinateSystem2i windowCS) {
+    public void renderTask(Canvas canvas, CoordinateSystem2i windowCS) {
         // Сохраняем последнюю СК
         lastWindowCS = windowCS;
 
         canvas.save();
         // создаём перо
-        try (var paint = new Paint()) {
+        try (var p = new Paint()) {
+            // рисуем треугольник
             if (triangle != null)
                 triangle.render(canvas, windowCS, ownCS);
-            for (Point p : points) {
-                if (!solved) {
-                    paint.setColor(p.getColor());
-                } else {
-                    if (crossed.contains(p))
-                        paint.setColor(CROSSED_COLOR);
-                    else
-                        paint.setColor(SUBTRACTED_COLOR);
-                }
-                // y-координату разворачиваем, потому что у СК окна ось y направлена вниз,
-                // а в классическом представлении - вверх
-                Vector2i windowPos = windowCS.getCoords(p.pos.x, p.pos.y, ownCS);
-                // рисуем точку
-                canvas.drawRect(Rect.makeXYWH(windowPos.x - POINT_SIZE, windowPos.y - POINT_SIZE, POINT_SIZE * 2, POINT_SIZE * 2), paint);
+            if (solved) {
+
             }
         }
         canvas.restore();
@@ -283,6 +272,10 @@ public class Task {
 
     }
 
+
+    /**
+     * Добавить точку треугольника
+     */
 
     Vector2d posA;
     Vector2d posB;
