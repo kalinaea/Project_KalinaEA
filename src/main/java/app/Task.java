@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.github.humbleui.jwm.MouseButton;
 import io.github.humbleui.skija.Canvas;
 import io.github.humbleui.skija.Paint;
+import io.github.humbleui.skija.RRect;
 import io.github.humbleui.skija.Rect;
 import lombok.Getter;
 import misc.CoordinateSystem2d;
@@ -87,19 +88,17 @@ public class Task {
      */
     private boolean solved;
 
+    /**
+     * точки в ответе
+     */
+    Vector2d pos1_answer;
+    Vector2d pos2_answer;
 
     /**
-     * Список точек в пересечении
+     * точки пересечения с треугольником прямой в ответе
      */
-    @Getter
-    @JsonIgnore
-    private final ArrayList<Point> crossed;
-    /**
-     * Список точек в разности
-     */
-    @Getter
-    @JsonIgnore
-    private final ArrayList<Point> single;
+    Vector2d pos1_cross;
+    Vector2d pos2_cross;
 
 
 
@@ -118,8 +117,6 @@ public class Task {
         this.points = points;
         this.triangles = triangles;
         this.lines = lines;
-        this.crossed = new ArrayList<>();
-        this.single = new ArrayList<>();
     }
 
 
@@ -133,13 +130,14 @@ public class Task {
         triangle = null;
     }
 
+
+
     /**
      * Рисование задачи
      *
      * @param canvas   область рисования
      * @param windowCS СК окна
      */
-
     public void renderTask(Canvas canvas, CoordinateSystem2i windowCS) {
         // Сохраняем последнюю СК
         lastWindowCS = windowCS;
@@ -150,12 +148,19 @@ public class Task {
             // рисуем треугольник
             if (triangle != null)
                 triangle.render(canvas, windowCS, ownCS);
+
             if (solved) {
+                // рисуем прямую через точки в ответе
+                Line line = new Line(pos1_answer, pos2_answer);
+                line.render(canvas, windowCS, ownCS);
+
 
             }
         }
+
         canvas.restore();
     }
+
 
     /**
      * Клик мыши по пространству задачи
@@ -190,38 +195,7 @@ public class Task {
     }
 
 
-    /**
-     * Решить задачу
-     */
-    public void solve() {
-        // очищаем списки
-        crossed.clear();
-        single.clear();
 
-        // перебираем пары точек
-        for (int i = 0; i < points.size(); i++) {
-            for (int j = i + 1; j < points.size(); j++) {
-                // сохраняем точки
-                Point a = points.get(i);
-                Point b = points.get(j);
-                // если точки совпадают по положению
-                if (a.pos.equals(b.pos)) {
-                    if (!crossed.contains(a)) {
-                        crossed.add(a);
-                        crossed.add(b);
-                    }
-                }
-            }
-        }
-
-        /// добавляем вс
-        for (Point point : points)
-            if (!crossed.contains(point))
-                single.add(point);
-
-        // задача решена
-        solved = true;
-    }
 
     /**
      * Отмена решения задачи
