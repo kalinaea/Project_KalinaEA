@@ -154,7 +154,8 @@ public class Task {
                 Line line = new Line(pos1_answer, pos2_answer);
                 line.render(canvas, windowCS, ownCS);
 
-
+                canvas.drawRRect(RRect.makeXYWH((float) pos1_cross.x-2, (float) pos1_cross.y-2, 4, 4, 2), p);
+                canvas.drawRRect(RRect.makeXYWH((float) pos2_cross.x-2, (float) pos2_cross.y-2, 4, 4, 2), p);
             }
         }
 
@@ -247,6 +248,7 @@ public class Task {
     }
 
 
+
     /**
      * Добавить точку треугольника
      */
@@ -266,5 +268,13 @@ public class Task {
             posA = null;
             posB = null;
         }
+    }
+
+
+    /**
+     * решить задачу
+     */
+    public void solve() {
+
     }
 }

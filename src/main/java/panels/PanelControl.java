@@ -1,5 +1,6 @@
 package panels;
 
+import app.Line;
 import app.Task;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import io.github.humbleui.jwm.*;
 import io.github.humbleui.jwm.Event;
 import io.github.humbleui.jwm.Window;
 import io.github.humbleui.skija.Canvas;
+import io.github.humbleui.skija.RRect;
 import misc.CoordinateSystem2i;
 import misc.Vector2d;
 import misc.Vector2i;
@@ -185,24 +187,24 @@ public class PanelControl extends GridPanel {
         clear.setOnClick(() -> PanelRendering.task.clear());
         buttons.add(clear);
 
+
         solve = new Button(
                 window, false, backgroundColor, PANEL_PADDING,
                 6, 12, 3, 11, 3, 1, "Решить",
                 true, true);
         solve.setOnClick(() -> {
             if (!PanelRendering.task.isSolved()) {
-                PanelRendering.task.solve();
-                String s = "Задача решена\n" +
-                        "Пересечений: " + PanelRendering.task.getCrossed().size() / 2 + "\n" +
-                        "Отдельных точек: " + PanelRendering.task.getSingle().size();
-                PanelLog.success(s);
-                solve.text = "Сбросить";
-            } else {
-                cancelTask();
+                if (!PanelRendering.task.isSolved()) {
+                    PanelRendering.task.solve();
+                    solve.text = "Сбросить";
+                } else {
+                    cancelTask();
+                }
+                window.requestFrame();
             }
-            window.requestFrame();
         });
         buttons.add(solve);
+
 
         Button addPoints = new Button(
                 window, false, backgroundColor, PANEL_PADDING,
@@ -222,7 +224,6 @@ public class PanelControl extends GridPanel {
         });
         buttons.add(addPoints);
     }
-
 
     /**
      * Обработчик событий
