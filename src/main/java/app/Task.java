@@ -97,8 +97,8 @@ public class Task {
     /**
      * точки пересечения с треугольником прямой в ответе
      */
-    Vector2d pos1_cross_answer;
-    Vector2d pos2_cross_answer;
+    Vector2d pos1_cross;
+    Vector2d pos2_cross;
 
 
 
@@ -154,8 +154,8 @@ public class Task {
                 Line lineAnswer = new Line(pos1_answer, pos2_answer);
                 lineAnswer.render(canvas, windowCS, ownCS);
 
-                canvas.drawRRect(RRect.makeXYWH((float) pos1_cross_answer.x-2, (float) pos1_cross_answer.y-2, 4, 4, 2), p);
-                canvas.drawRRect(RRect.makeXYWH((float) pos2_cross_answer.x-2, (float) pos2_cross_answer.y-2, 4, 4, 2), p);
+                canvas.drawRRect(RRect.makeXYWH((float) pos1_cross.x-2, (float) pos1_cross.y-2, 4, 4, 2), p);
+                canvas.drawRRect(RRect.makeXYWH((float) pos2_cross.x-2, (float) pos2_cross.y-2, 4, 4, 2), p);
             }
         }
 
@@ -349,7 +349,7 @@ public class Task {
                 // для AC
                 // при двух предыдущих нулевых векторах прямая не пересекает треугольник
                 // при двух предыдущих ненулевых векторах вершины отрезка внутри треугольника уже найдены
-                if ((CrossAB != null && CrossBC == null) || (CrossAB == null && CrossBC != null)) {
+                if ((CrossAB != null && CrossBC == null) || (CrossAB == null && CrossBC != null) || (CrossAB == CrossBC)) {
                     if (k_AC != k) {
                         // координаты пересечения с прямой AB
                         double xCrossAC = (b_AB - b) / (k - k_AB);
@@ -361,6 +361,49 @@ public class Task {
                     }
                 }
 
+                // длина отрезка
+                double lenght = 0;
+
+                // максимальная длина отрезка
+                double maxLenght = 0;
+
+                // длина отрезка внутри треугольника
+                if (CrossAB != null && CrossBC != null) {
+                    // вектор отрезка внутри треугольника
+                    Vector2d lineSegment = CrossAB.subtract(CrossBC);
+                    lenght = lineSegment.length();
+                    // если отрезок больше максимального
+                    if (lenght > maxLenght) {
+                        maxLenght = lenght;
+                        pos1_answer = M;
+                        pos2_answer = N;
+                        pos1_cross = CrossAB;
+                        pos2_cross = CrossBC;
+                    }
+                } else if (CrossBC != null && CrossAC != null) {
+                    // вектор отрезка внутри треугольника
+                    Vector2d lineSegment = CrossBC.subtract(CrossAC);
+                    lenght = lineSegment.length();
+                    // если отрезок больше максимального
+                    if (lenght > maxLenght) {
+                        maxLenght = lenght;
+                        pos1_answer = M;
+                        pos2_answer = N;
+                        pos1_cross = CrossBC;
+                        pos2_cross = CrossAC;
+                    }
+                } else if (CrossAB != null && CrossAC != null) {
+                    Vector2d lineSegment = CrossAB.subtract(CrossAC);
+                    lenght = lineSegment.length();
+                    // если отрезок больше максимального
+                    if (lenght > maxLenght) {
+                        maxLenght = lenght;
+                        pos1_answer = M;
+                        pos2_answer = N;
+                        pos1_cross = CrossAB;
+                        pos2_cross = CrossAC;
+                    }
+                }
 
 
             }
