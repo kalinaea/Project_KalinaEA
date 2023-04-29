@@ -148,7 +148,6 @@ public class Task {
             // рисуем треугольник
             if (triangle != null)
                 triangle.render(canvas, windowCS, ownCS);
-
             if (solved) {
                 // рисуем прямую через точки в ответе
                 Line lineAnswer = new Line(pos1_answer, pos2_answer);
@@ -158,7 +157,6 @@ public class Task {
                 canvas.drawRRect(RRect.makeXYWH((float) pos2_cross.x-2, (float) pos2_cross.y-2, 4, 4, 2), p);
             }
         }
-
         canvas.restore();
     }
 
@@ -406,7 +404,7 @@ public class Task {
                     }
                 }
             }
-            if (maxLenght == 0) System.out.println("Нет решений");
+            if (maxLenght == 0) PanelLog.info("Нет решений");
         }
     }
 }
