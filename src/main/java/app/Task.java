@@ -404,8 +404,6 @@ public class Task {
                         pos2_cross = CrossAC;
                     }
                 }
-
-
             }
         }
     }
