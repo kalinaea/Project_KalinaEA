@@ -148,7 +148,7 @@ public class Task {
             // рисуем треугольник
             if (triangle != null)
                 triangle.render(canvas, windowCS, ownCS);
-            if (solved) {
+            if (solved && maxLenght != 0) {
                 // рисуем прямую через точки в ответе
                 Line lineAnswer = new Line(pos1_answer, pos2_answer);
                 lineAnswer.render(canvas, windowCS, ownCS);
@@ -269,6 +269,11 @@ public class Task {
     }
 
 
+    // максимальная длина отрезка
+    double maxLenght = 0;
+
+
+
     /**
      * решение задачи
      */
@@ -303,8 +308,6 @@ public class Task {
         // длина отрезка
         double lenght = 0;
 
-        // максимальная длина отрезка
-        double maxLenght = 0;
 
         for(int i = 0; i < numberPoints; i++) {
             for (int j = 0; j < numberPoints; j++) {
