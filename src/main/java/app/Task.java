@@ -302,6 +302,12 @@ public class Task {
         double k_AC = lineAC.k;
         double b_AC = lineAC.b;
 
+        // длина отрезка
+        double lenght = 0;
+
+        // максимальная длина отрезка
+        double maxLenght = 0;
+
         for(int i = 0; i < numberPoints; i++) {
             for (int j = 0; j < numberPoints; j++) {
                 // две точки
@@ -361,11 +367,6 @@ public class Task {
                     }
                 }
 
-                // длина отрезка
-                double lenght = 0;
-
-                // максимальная длина отрезка
-                double maxLenght = 0;
 
                 // длина отрезка внутри треугольника
                 if (CrossAB != null && CrossBC != null) {
@@ -405,6 +406,7 @@ public class Task {
                     }
                 }
             }
+            if (maxLenght == 0) System.out.println("Нет решений");
         }
     }
 }
