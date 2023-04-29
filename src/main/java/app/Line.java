@@ -38,16 +38,6 @@ public class Line {
         this.pos2 = pos2;
     }
 
-    /**
-     * Конструктор прямой через угловой коэффициент
-     * @param k
-     * @param b
-     */
-    public Line(double k, double b) {
-        this.k = k;
-        this.b = b;
-    }
-
 
     /**
      * Получить положение
@@ -56,16 +46,9 @@ public class Line {
      * @return положение
      */
     public Line getLine() {
-        double x1 = pos1.x;
-        double y1 = pos1.y;
-        double x2 = pos2.x;
-        double y2 = pos2.y;
-        double k = (y2 - y1) / (x2 - x1);
-        double b = y2 - x2 * k;
-        Line line = new Line(k, b);
+        Line line = new Line(pos1, pos2);
         return line;
     }
-
 
 
     /**

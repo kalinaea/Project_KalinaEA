@@ -160,7 +160,6 @@ public class Task {
         canvas.restore();
     }
 
-
     /**
      * Клик мыши по пространству задачи
      *
@@ -171,13 +170,8 @@ public class Task {
         if (lastWindowCS == null) return;
         // получаем положение на экране
         Vector2d taskPos = ownCS.getCoords(pos, lastWindowCS);
-        // если левая кнопка мыши, добавляем в первое множество
-        if (mouseButton.equals(MouseButton.PRIMARY)) {
-            addPoint(taskPos);
-            // если правая, то во второе
-        } else if (mouseButton.equals(MouseButton.SECONDARY)) {
-            addPoint(taskPos);
-        }
+        // выводим положение курсора на консоль
+        System.out.println("click " + taskPos);
     }
 
     /**

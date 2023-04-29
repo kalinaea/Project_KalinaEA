@@ -5,11 +5,13 @@ import app.Task;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.humbleui.jwm.Event;
 import io.github.humbleui.jwm.EventMouseButton;
+import io.github.humbleui.jwm.MouseButton;
 import io.github.humbleui.jwm.Window;
 import io.github.humbleui.skija.Canvas;
 import misc.CoordinateSystem2d;
 import misc.CoordinateSystem2i;
 import misc.Vector2d;
+import misc.Vector2i;
 
 import java.io.File;
 import java.io.IOException;
@@ -68,14 +70,16 @@ public class PanelRendering extends GridPanel {
         // если событие - это клик мышью
         if (e instanceof EventMouseButton ee) {
             // если последнее положение мыши сохранено и курсор был внутри
-            if (lastMove != null && lastInside) {
-                // если событие - нажатие мыши
-                if (ee.isPressed())
-                    // обрабатываем клик по задаче
-                    task.click(lastWindowCS.getRelativePos(lastMove), ee.getButton());
+            if (lastMove != null && lastInside){
+                // обрабатываем клик по задаче
+                task.click(lastWindowCS.getRelativePos(lastMove), ee.getButton());
+                // перерисовываем окно
+                window.requestFrame();
             }
         }
     }
+
+
 
     /**
      * Метод под рисование в конкретной реализации
