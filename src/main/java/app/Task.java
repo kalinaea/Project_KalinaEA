@@ -289,21 +289,17 @@ public class Task {
         Vector2d B = triangle.pos2;
         Vector2d C = triangle.pos3;
         // прямые, содержащие отрезки треугольника (заданы двумя точками)
-        Line lineABTwoPoints = new Line(A, B);
-        Line lineBCTwoPoints = new Line(B, C);
-        Line lineACTwoPoints = new Line(A, C);
-        // прямые, содержащие отрезки треугольника (заданы через угловой коэффициент)
-        Line lineAB = lineABTwoPoints.getLine();
-        Line lineBC = lineBCTwoPoints.getLine();
-        Line lineAC = lineACTwoPoints.getLine();
+        Line lineAB = new Line(A, B);
+        Line lineBC = new Line(B, C);
+        Line lineAC = new Line(A, C);
 
         // k и b этих прямых
-        double k_AB = lineAB.k;
-        double b_AB = lineAB.b;
-        double k_BC = lineBC.k;
-        double b_BC = lineBC.b;
-        double k_AC = lineAC.k;
-        double b_AC = lineAC.b;
+        double k_AB = (A.y - B.y) / (A.x - B.x);
+        double b_AB = B.y - k_AB * B.x;
+        double k_BC = (B.y - C.y) / (B.x - C.x);
+        double b_BC = C.y - k_BC * C.x;
+        double k_AC = (A.y - C.y) / (A.x - C.x);
+        double b_AC = A.y - k_AC * A.x;
 
         // длина отрезка
         double lenght = 0;
@@ -318,12 +314,10 @@ public class Task {
                 Vector2d M = pM.getPos();
                 Vector2d N = pN.getPos();
                 // прямая через две точки
-                Line lineTwoPoints = new Line(A, B);
-                // прямая через угловой коэффициент
-                Line line = lineTwoPoints.getLine();
+                Line line = new Line(M, N);
                 // k и b данной прямой
-                double k = line.k;
-                double b = line.b;
+                double k = (M.y - N.y) / (M.x - N.x);
+                double b = M.y - k * M.x;
                 // ыектора точек пересечения прямой с отрезками
                 Vector2d CrossAB = null;
                 Vector2d CrossBC = null;
@@ -407,7 +401,8 @@ public class Task {
                     }
                 }
             }
-            if (maxLenght == 0) PanelLog.info("Нет решений");
         }
+        if (maxLenght == 0) PanelLog.info("Нет решений");
+        solved = true;
     }
 }
