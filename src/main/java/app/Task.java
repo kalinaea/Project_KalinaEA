@@ -145,6 +145,13 @@ public class Task {
         canvas.save();
         // создаём перо
         try (var p = new Paint()) {
+            for (Point point : points) {
+                // y-координату разворачиваем, потому что у СК окна ось y направлена вниз,
+                // а в классическом представлении - вверх
+                Vector2i windowPos = windowCS.getCoords(point.pos.x, point.pos.y, ownCS);
+                canvas.drawRect(Rect.makeXYWH(windowPos.x - POINT_SIZE, windowPos.y - POINT_SIZE, POINT_SIZE * 2, POINT_SIZE * 2), p);
+            }
+
             // рисуем треугольник
             if (triangle != null)
                 triangle.render(canvas, windowCS, ownCS);
