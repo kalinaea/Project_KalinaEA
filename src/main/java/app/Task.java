@@ -160,8 +160,8 @@ public class Task {
                 Line lineAnswer = new Line(pos1_answer, pos2_answer);
                 lineAnswer.render(canvas, windowCS, ownCS);
 
-                canvas.drawRRect(RRect.makeXYWH((float) pos1_cross.x-2, (float) pos1_cross.y-2, 4, 4, 2), p);
-                canvas.drawRRect(RRect.makeXYWH((float) pos2_cross.x-2, (float) pos2_cross.y-2, 4, 4, 2), p);
+                canvas.drawRRect(RRect.makeXYWH((float) pos1_cross.x-2, (float) pos1_cross.y-2, POINT_SIZE * 2, POINT_SIZE * 2, 2), p);
+                canvas.drawRRect(RRect.makeXYWH((float) pos2_cross.x-2, (float) pos2_cross.y-2, POINT_SIZE * 2, POINT_SIZE * 2, 2), p);
             }
         }
         canvas.restore();
@@ -241,9 +241,14 @@ public class Task {
         return solved;
     }
 
+    /**
+     * случайный треугольник
+     */
     public void setRandomTriangle() {
         Vector2d tA = ownCS.getRandomCoords();
-
+        Vector2d tB = ownCS.getRandomCoords();
+        Vector2d tC = ownCS.getRandomCoords();
+        triangle = new Triangle(tA, tB, tC);
     }
 
 
