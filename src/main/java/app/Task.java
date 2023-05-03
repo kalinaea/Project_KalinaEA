@@ -182,13 +182,23 @@ public class Task {
         if (mouseButton.equals(MouseButton.PRIMARY)) points.add(pointByMouse);
         // если правая кнопка мыши, добавляем треугольник по точкам на экране
         else if (mouseButton.equals(MouseButton.SECONDARY)) {
+            int i = 1;
             // получаем положение 2-й точки на экране
             Vector2d taskPos1 = ownCS.getCoords(pos, lastWindowCS);
-            Point pointByMouse1 = new Point (taskPos);
+            Point pointByMouse1 = new Point (null);
+            if (mouseButton.equals(MouseButton.SECONDARY)) {
+                pointByMouse1 = new Point (taskPos1);
+                // счетчик точек
+                i++;
+            }
             // 3-й точки на экране
             Vector2d taskPos2 = ownCS.getCoords(pos, lastWindowCS);
-            Point pointByMouse2 = new Point (taskPos);
-            triangle = new Triangle(pointByMouse.getPos(), pointByMouse1.getPos(), pointByMouse2.getPos());
+            Point pointByMouse2 = new Point (null);
+            if (mouseButton.equals(MouseButton.SECONDARY)) {
+                pointByMouse1 = new Point (taskPos2);
+                i++;
+            }
+            if (i == 3) triangle = new Triangle(pointByMouse.getPos(), pointByMouse1.getPos(), pointByMouse2.getPos());
         }
     }
 
