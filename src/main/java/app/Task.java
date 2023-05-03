@@ -297,10 +297,6 @@ public class Task {
     public void solve() {
         //количество точек
         int numberPoints = points.size();
-        // треугольник из списка
-        Triangle triangleFromList = triangles.get(0);
-        // получили треугольник
-        Triangle triangle = triangleFromList.getTriangle();
         // вектора точек треугольника
         Vector2d A = triangle.pos1;
         Vector2d B = triangle.pos2;
@@ -335,7 +331,7 @@ public class Task {
                 // k и b данной прямой
                 double k = (M.y - N.y) / (M.x - N.x);
                 double b = M.y - k * M.x;
-                // ыектора точек пересечения прямой с отрезками
+                // вектора точек пересечения прямой с отрезками
                 Vector2d CrossAB = null;
                 Vector2d CrossBC = null;
                 Vector2d CrossAC = null;
