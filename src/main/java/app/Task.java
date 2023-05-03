@@ -177,8 +177,8 @@ public class Task {
         if (lastWindowCS == null) return;
         // получаем положение на экране
         Vector2d taskPos = ownCS.getCoords(pos, lastWindowCS);
-        // выводим положение курсора на консоль
-        System.out.println("click " + taskPos);
+        Point pointByMouse = new Point (taskPos);
+        points.add(pointByMouse);
     }
 
     /**
@@ -411,4 +411,6 @@ public class Task {
         if (maxLenght == 0) PanelLog.info("Нет решений");
         solved = true;
     }
+
+
 }
