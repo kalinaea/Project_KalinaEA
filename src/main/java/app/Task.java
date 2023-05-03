@@ -199,6 +199,8 @@ public class Task {
                 i++;
             }
             if (i == 3) triangle = new Triangle(pointByMouse.getPos(), pointByMouse1.getPos(), pointByMouse2.getPos());
+            // обнуляем счетчик
+            i = 0;
         }
     }
 
