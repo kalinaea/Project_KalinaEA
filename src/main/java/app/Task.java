@@ -64,7 +64,6 @@ public class Task {
     private final ArrayList<Line> lines;
 
 
-
     /**
      * Список треугольников
      */
@@ -101,7 +100,6 @@ public class Task {
     Vector2d pos2_cross;
 
 
-
     @Getter
     Triangle triangle;
 
@@ -120,7 +118,6 @@ public class Task {
     }
 
 
-
     /**
      * Очистить задачу
      */
@@ -129,7 +126,6 @@ public class Task {
         solved = false;
         triangle = null;
     }
-
 
 
     /**
@@ -160,12 +156,17 @@ public class Task {
                 Line lineAnswer = new Line(pos1_answer, pos2_answer);
                 lineAnswer.render(canvas, windowCS, ownCS);
 
-                canvas.drawRRect(RRect.makeXYWH((float) pos1_cross.x-2, (float) pos1_cross.y-2, POINT_SIZE * 2, POINT_SIZE * 2, 2), p);
-                canvas.drawRRect(RRect.makeXYWH((float) pos2_cross.x-2, (float) pos2_cross.y-2, POINT_SIZE * 2, POINT_SIZE * 2, 2), p);
+                canvas.drawRRect(RRect.makeXYWH((float) pos1_cross.x - 2, (float) pos1_cross.y - 2, POINT_SIZE * 2, POINT_SIZE * 2, 2), p);
+                canvas.drawRRect(RRect.makeXYWH((float) pos2_cross.x - 2, (float) pos2_cross.y - 2, POINT_SIZE * 2, POINT_SIZE * 2, 2), p);
             }
         }
         canvas.restore();
     }
+
+
+    Vector2d posA;
+    Vector2d posB;
+    Vector2d posC;
 
     /**
      * Клик мыши по пространству задачи
@@ -177,30 +178,23 @@ public class Task {
         if (lastWindowCS == null) return;
         // получаем положение точки на экране
         Vector2d taskPos = ownCS.getCoords(pos, lastWindowCS);
-        Point pointByMouse = new Point (taskPos);
+        Point pointByMouse = new Point(taskPos);
         // если левая кнопка мыши, добавляем точку
         if (mouseButton.equals(MouseButton.PRIMARY)) points.add(pointByMouse);
-        // если правая кнопка мыши, добавляем треугольник по точкам на экране
+            // если правая кнопка мыши, добавляем треугольник по точкам на экране
         else if (mouseButton.equals(MouseButton.SECONDARY)) {
-            int i = 1;
+
             // получаем положение 2-й точки на экране
             Vector2d taskPos1 = ownCS.getCoords(pos, lastWindowCS);
-            Point pointByMouse1 = new Point (null);
-            if (mouseButton.equals(MouseButton.SECONDARY)) {
-                pointByMouse1 = new Point (taskPos1);
-                // счетчик точек
-                i++;
+            if (posA == null) {
+                posA = taskPos1;
+            } else if (posB == null) {
+                posB = taskPos1;
+            } else {
+                triangle = new Triangle(posA, posB, taskPos1);
+                posA = null;
+                posB = null;
             }
-            // 3-й точки на экране
-            Vector2d taskPos2 = ownCS.getCoords(pos, lastWindowCS);
-            Point pointByMouse2 = new Point (null);
-            if (mouseButton.equals(MouseButton.SECONDARY)) {
-                pointByMouse1 = new Point (taskPos2);
-                i++;
-            }
-            if (i == 3) triangle = new Triangle(pointByMouse.getPos(), pointByMouse1.getPos(), pointByMouse2.getPos());
-            // обнуляем счетчик
-            i = 0;
         }
     }
 
@@ -216,8 +210,6 @@ public class Task {
         // Добавляем в лог запись информации
         PanelLog.info("точка " + newPoint + " добавлена");
     }
-
-
 
 
     /**
@@ -275,32 +267,30 @@ public class Task {
     }
 
 
-
     /**
      * Добавить точку треугольника
      */
 
-    Vector2d posA;
-    Vector2d posB;
+    Vector2d tPosA;
+    Vector2d tPosB;
 
 
     public void addTrianglePoint(double x, double y) {
-        if (posA == null) {
-            posA = new Vector2d(x, y);
-        } else if (posB == null) {
-            posB = new Vector2d(x, y);
+        if (tPosA == null) {
+            tPosA = new Vector2d(x, y);
+        } else if (tPosB == null) {
+            tPosB = new Vector2d(x, y);
         } else {
             Vector2d posC = new Vector2d(x, y);
-            triangle = new Triangle(posA, posB, posC);
-            posA = null;
-            posB = null;
+            triangle = new Triangle(tPosA, tPosB, posC);
+            tPosA = null;
+            tPosB = null;
         }
     }
 
 
     // максимальная длина отрезка
     double maxLenght = 0;
-
 
 
     /**
@@ -330,7 +320,7 @@ public class Task {
         double lenght = 0;
 
 
-        for(int i = 0; i < numberPoints; i++) {
+        for (int i = 0; i < numberPoints; i++) {
             for (int j = 0; j < numberPoints; j++) {
                 // две точки
                 Point pM = points.get(i);
