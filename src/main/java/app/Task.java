@@ -303,7 +303,7 @@ public class Task {
         if (get_line_a(line) == 0) return 1;
         else return (line.pos1.x - line.pos2.x) / (line.pos2.y - line.pos1.y);
     }
-]
+
 
     /**
      * Коэффициент c в общем уравнении прямой
