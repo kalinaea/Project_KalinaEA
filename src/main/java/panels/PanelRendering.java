@@ -53,7 +53,7 @@ public class PanelRendering extends GridPanel {
         );
 
         // создаём задачу без точек
-        task = new Task(cs, new ArrayList<>(), new ArrayList<>(), null);
+        task = new Task(cs, new ArrayList<>(), null);
     }
 
     /**

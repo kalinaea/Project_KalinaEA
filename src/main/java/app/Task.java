@@ -283,6 +283,61 @@ public class Task {
         }
     }
 
+    /**
+     * Коэффициент а в общем уравнении прямой
+     * @param line
+     * @return а
+     */
+    public double get_line_a (Line line) {
+        if (line.pos1.y == line.pos2.y) return 0;
+        else return 1;
+    }
+
+
+    /**
+     * Коэффициент b в общем уравнении прямой
+     * @param line
+     * @return b
+     */
+    public double get_line_b (Line line) {
+        if (get_line_a(line) == 0) return 1;
+        else return (line.pos1.x - line.pos2.x) / (line.pos2.y - line.pos1.y);
+    }
+]
+
+    /**
+     * Коэффициент c в общем уравнении прямой
+     * @param line
+     * @return c
+     */
+    public double get_line_c (Line line) {
+        return (get_line_a(line) * line.pos1.x + get_line_b(line) * line.pos1.y) * -1;
+    }
+
+    /**
+     * Точка пересечения двух прямых
+     * @param line1
+     * @param line2
+     * @return vector
+     */
+    public Vector2d crossLine(Line line1, Line line2) {
+        double a1 = get_line_a(line1);
+        double b1 = get_line_b(line1);
+        double c1 = get_line_c(line1);
+        double a2 = get_line_a(line2);
+        double b2 = get_line_b(line2);
+        double c2 = get_line_c(line2);
+        Vector2d vector = new Vector2d();
+        if (a1 * b2 != a2 * b1 && a1 != 0) {
+            vector.y = (a2 * c1 - a1 * c2) / (a1 * b2 - a2 * b1);
+            vector.x = (c1 + b1 * vector.y) / a1 * -1;
+        } else if (a1 * b2 != a2 * b1 && a1 == 0){
+            vector.y = -1 * c1;
+            if (a2 != 0) vector.x = (c1 * b2 - c2) / a2;
+            else return null;
+        } else if (a1 * b2 == a2 * b1) return null;
+        return vector;
+    }
 
     // максимальная длина отрезка
     double maxLenght = 0;
@@ -311,6 +366,9 @@ public class Task {
                 Vector2d posN = points.get(j).getPos();
                 // прямая через них
                 Line line = new Line(posM, posN);
+                double a = get_line_a(line);
+                double b = get_line_b(line);
+                double c = get_line_c(line);
 
             }
         }
