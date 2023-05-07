@@ -339,9 +339,33 @@ public class Task {
         return vector;
     }
 
-    // максимальная длина отрезка
-    double maxLenght = 0;
+    /**
+     * Пересекает ли отрезок прямой
+     */
+    public boolean crossLineSegment(Line line1, Line line2, Vector2d pos_border_1, Vector2d pos_border_2) {
+        Vector2d cross = crossLine(line1, line2);
+        if (cross != null) {
+            if ((cross.x > pos_border_1.x && cross.x < pos_border_2.x) || (cross.x < pos_border_1.x && cross.x > pos_border_2.x)) return true;
+            else return false;
+        } else return false;
+    }
 
+    /**
+     * Если отрезок прямой внутри треугольника больше максимального
+     */
+    public void lenghtBiggerMax(double lenght, double maxLenght, Vector2d posM, Vector2d posN, Vector2d cross1, Vector2d cross2) {
+        maxLenght = lenght;
+        pos1_answer = posM;
+        pos2_answer = posN;
+        pos1_cross = cross1;
+        pos2_cross = cross2;
+    }
+
+
+    /**
+     * Максимальная длина отрезка внутри треугольника
+     */
+    double maxLenght = 0;
 
     /**
      * решение задачи
@@ -357,6 +381,9 @@ public class Task {
         Line lineAB = new Line(posA, posB);
         Line lineBC = new Line(posB, posC);
         Line lineAC = new Line(posA, posC);
+        // длина отрезка внутри треугольника
+        double lenght = 0;
+
 
         // перебор всех пар точек
         for(int i = 0; i < numberPoints; i++) {
@@ -366,13 +393,40 @@ public class Task {
                 Vector2d posN = points.get(j).getPos();
                 // прямая через них
                 Line line = new Line(posM, posN);
-                double a = get_line_a(line);
-                double b = get_line_b(line);
-                double c = get_line_c(line);
+                Vector2d crossAB = null;
+                Vector2d crossBC = null;
+                Vector2d crossAC = null;
 
+                // смотрим, пересекает ли прямая отрезки треугольника
+                if (crossLineSegment(line, lineAB, posA,posB)) {
+                    crossAB = crossLine(line, lineAB);
+                }
+                if (crossLineSegment(line, lineBC, posB,posC)) {
+                    crossBC = crossLine(line, lineBC);
+                }
+                if (crossLineSegment(line, lineAC, posA,posC)) {
+                    crossAC = crossLine(line, lineAC);
+                }
+
+                // вектор отрезка внутри треугольника
+                Vector2d lineSegment = new Vector2d();
+                // если есть два пересечения со сторонами треугольника
+                if (crossAB != null && crossBC != null) {
+                    lineSegment = crossAB.subtract(crossBC);
+                    lenght = lineSegment.length();
+                    // если отрезок больше максимального
+                    if (lenght > maxLenght) lenghtBiggerMax(lenght, maxLenght, posM, posN, crossAB, crossBC);
+                } else if (crossBC != null && crossAC != null) {
+                    lineSegment = crossBC.subtract(crossAC);
+                    lenght = lineSegment.length();
+                    if (lenght > maxLenght) lenghtBiggerMax(lenght, maxLenght, posM, posN, crossBC, crossAC);
+                } else if (crossAB != null && crossAC != null) {
+                    lineSegment = crossAB.subtract(crossAC);
+                    lenght = lineSegment.length();
+                    if (lenght > maxLenght) lenghtBiggerMax(lenght, maxLenght, posM, posN, crossAB, crossAC);
+                }
             }
         }
-
     }
 
 
