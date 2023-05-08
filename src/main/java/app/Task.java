@@ -355,7 +355,7 @@ public class Task {
     /**
      * Если отрезок прямой внутри треугольника больше максимального
      */
-    public void lenghtBiggerMax(Vector2d posM, Vector2d posN, Vector2d cross1, Vector2d cross2) {
+    public void lenghtBiggerMax(Vector2d posM, Vector2d posN, Vector2d cross1, Vector2d cross2, double lenght) {
         maxLenght = lenght;
         pos1_answer = posM;
         pos2_answer = posN;
@@ -369,10 +369,7 @@ public class Task {
      */
     double maxLenght = 0;
 
-    /**
-     * Длина отрезка внутри треугольника
-     */
-    double lenght = 0;
+
     /**
      * решение задачи
      */
@@ -387,7 +384,8 @@ public class Task {
         Line lineAB = new Line(posA, posB);
         Line lineBC = new Line(posB, posC);
         Line lineAC = new Line(posA, posC);
-
+        // Длина отрезка внутри треугольника
+        double lenght = 0;
         // перебор всех пар точек
         for(int i = 0; i < numberPoints; i++) {
             for(int j = 0; j < numberPoints; j++) {
@@ -397,8 +395,6 @@ public class Task {
                 // прямая через них
                 if (posM != posN) {
                     Line line = new Line(posM, posN);
-                    System.out.println("posM " + posM.toString());
-                    System.out.println("posN " + posN.toString());
                     // точки пересечения со сторонами треугольника
                     Vector2d crossAB = null;
                     Vector2d crossBC = null;
@@ -407,15 +403,12 @@ public class Task {
                     // смотрим, пересекает ли прямая отрезки треугольника
                     if (crossLineSegment(line, lineAB, posA, posB)) {
                         crossAB = crossLine(line, lineAB);
-                        System.out.println("crossAB " + crossAB.toString());
                     }
                     if (crossLineSegment(line, lineBC, posB, posC)) {
                         crossBC = crossLine(line, lineBC);
-                        System.out.println("crossBC " + crossBC.toString());
                     }
                     if (crossLineSegment(line, lineAC, posA, posC)) {
                         crossAC = crossLine(line, lineAC);
-                        System.out.println("crossAC " + crossAC.toString());
                     }
 
                     // вектор отрезка внутри треугольника
@@ -425,36 +418,22 @@ public class Task {
                         lineSegment = crossAB.subtract(crossBC);
                         lenght = lineSegment.length();
                         // если отрезок больше максимального
-                        if (lenght > maxLenght) lenghtBiggerMax(posM, posN, crossAB, crossBC);
-                        System.out.println("lenght " + lenght);
-                        System.out.println("maxLenght " + maxLenght);
-                        System.out.println("pos1_answer " + pos1_answer.toString());
-                        System.out.println("pos2_answer " + pos2_answer.toString());
-                        System.out.println("pos1_cross " + pos1_cross.toString());
-                        System.out.println("pos2_cross " + pos2_cross.toString());
-                        System.out.println();
+                        if (lenght > maxLenght) {
+                            lenghtBiggerMax(posM, posN, crossAB, crossBC, lenght);
+                        }
                     } else if (crossBC != null && crossAC != null) {
                         lineSegment = crossBC.subtract(crossAC);
                         lenght = lineSegment.length();
-                        if (lenght > maxLenght) lenghtBiggerMax(posM, posN, crossBC, crossAC);
-                        System.out.println("lenght " + lenght);
-                        System.out.println("maxLenght " + maxLenght);
-                        System.out.println("pos1_answer " + pos1_answer.toString());
-                        System.out.println("pos2_answer " + pos2_answer.toString());
-                        System.out.println("pos1_cross " + pos1_cross.toString());
-                        System.out.println("pos2_cross " + pos2_cross.toString());
-                        System.out.println();
+                        if (lenght > maxLenght) {
+                            lenghtBiggerMax(posM, posN, crossBC, crossAC, lenght);
+                        }
+
                     } else if (crossAB != null && crossAC != null) {
                         lineSegment = crossAB.subtract(crossAC);
                         lenght = lineSegment.length();
-                        if (lenght > maxLenght) lenghtBiggerMax(posM, posN, crossAB, crossAC);
-                        System.out.println("lenght " + lenght);
-                        System.out.println("maxLenght " + maxLenght);
-                        System.out.println("pos1_answer " + pos1_answer.toString());
-                        System.out.println("pos2_answer " + pos2_answer.toString());
-                        System.out.println("pos1_cross " + pos1_cross.toString());
-                        System.out.println("pos2_cross " + pos2_cross.toString());
-                        System.out.println();
+                        if (lenght > maxLenght) {
+                            lenghtBiggerMax(posM, posN, crossAB, crossAC, lenght);
+                        }
                     }
                 }
             }
