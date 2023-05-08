@@ -395,66 +395,68 @@ public class Task {
                 Vector2d posM = points.get(i).getPos();
                 Vector2d posN = points.get(j).getPos();
                 // прямая через них
-                Line line = new Line(posM, posN);
-                // точки пересечения со сторонами треугольника
-                Vector2d crossAB = null;
-                Vector2d crossBC = null;
-                Vector2d crossAC = null;
+                if (posM != posN) {
+                    Line line = new Line(posM, posN);
+                    // точки пересечения со сторонами треугольника
+                    Vector2d crossAB = null;
+                    Vector2d crossBC = null;
+                    Vector2d crossAC = null;
 
-                // смотрим, пересекает ли прямая отрезки треугольника
-                if (crossLineSegment(line, lineAB, posA, posB)) {
-                    crossAB = crossLine(line, lineAB);
-                    System.out.println("crossAB " + crossAB.toString());
-                }
-                if (crossLineSegment(line, lineBC, posB, posC)) {
-                    crossBC = crossLine(line, lineBC);
-                    System.out.println("crossbc " + crossBC.toString());
-                }
-                if (crossLineSegment(line, lineAC, posA, posC)) {
-                    crossAC = crossLine(line, lineAC);
-                    System.out.println("crossAC " + crossAC.toString());
-                }
+                    // смотрим, пересекает ли прямая отрезки треугольника
+                    if (crossLineSegment(line, lineAB, posA, posB)) {
+                        crossAB = crossLine(line, lineAB);
+                        System.out.println("crossAB " + crossAB.toString());
+                    }
+                    if (crossLineSegment(line, lineBC, posB, posC)) {
+                        crossBC = crossLine(line, lineBC);
+                        System.out.println("crossbc " + crossBC.toString());
+                    }
+                    if (crossLineSegment(line, lineAC, posA, posC)) {
+                        crossAC = crossLine(line, lineAC);
+                        System.out.println("crossAC " + crossAC.toString());
+                    }
 
-                // вектор отрезка внутри треугольника
-                Vector2d lineSegment = null;
-                // если есть два пересечения со сторонами треугольника
-                if (crossAB != null && crossBC != null) {
-                    lineSegment = crossAB.subtract(crossBC);
-                    lenght = lineSegment.length();
-                    // если отрезок больше максимального
-                    if (lenght > maxLenght) lenghtBiggerMax(posM, posN, crossAB, crossBC);
-                    System.out.println("lenght " + lenght);
-                    System.out.println("maxLenght " + maxLenght);
-                    System.out.println("pos1_answer " + pos1_answer.toString());
-                    System.out.println("pos2_answer " + pos2_answer.toString());
-                    System.out.println("pos1_cross " + pos1_cross.toString());
-                    System.out.println("pos2_cross " + pos2_cross.toString());
-                    System.out.println();
-                } else if (crossBC != null && crossAC != null) {
-                    lineSegment = crossBC.subtract(crossAC);
-                    lenght = lineSegment.length();
-                    if (lenght > maxLenght) lenghtBiggerMax(posM, posN, crossBC, crossAC);
-                    System.out.println("lenght " + lenght);
-                    System.out.println("maxLenght " + maxLenght);
-                    System.out.println("pos1_answer " + pos1_answer.toString());
-                    System.out.println("pos2_answer " + pos2_answer.toString());
-                    System.out.println("pos1_cross " + pos1_cross.toString());
-                    System.out.println("pos2_cross " + pos2_cross.toString());
-                    System.out.println();
-                } else if (crossAB != null && crossAC != null) {
-                    lineSegment = crossAB.subtract(crossAC);
-                    lenght = lineSegment.length();
-                    if (lenght > maxLenght) lenghtBiggerMax(posM, posN, crossAB, crossAC);
-                    System.out.println("lenght " + lenght);
-                    System.out.println("maxLenght " + maxLenght);
-                    System.out.println("pos1_answer " + pos1_answer.toString());
-                    System.out.println("pos2_answer " + pos2_answer.toString());
-                    System.out.println("pos1_cross " + pos1_cross.toString());
-                    System.out.println("pos2_cross " + pos2_cross.toString());
-                    System.out.println();
+                    // вектор отрезка внутри треугольника
+                    Vector2d lineSegment = null;
+                    // если есть два пересечения со сторонами треугольника
+                    if (crossAB != null && crossBC != null) {
+                        lineSegment = crossAB.subtract(crossBC);
+                        lenght = lineSegment.length();
+                        // если отрезок больше максимального
+                        if (lenght > maxLenght) lenghtBiggerMax(posM, posN, crossAB, crossBC);
+                        System.out.println("lenght " + lenght);
+                        System.out.println("maxLenght " + maxLenght);
+                        System.out.println("pos1_answer " + pos1_answer.toString());
+                        System.out.println("pos2_answer " + pos2_answer.toString());
+                        System.out.println("pos1_cross " + pos1_cross.toString());
+                        System.out.println("pos2_cross " + pos2_cross.toString());
+                        System.out.println();
+                    } else if (crossBC != null && crossAC != null) {
+                        lineSegment = crossBC.subtract(crossAC);
+                        lenght = lineSegment.length();
+                        if (lenght > maxLenght) lenghtBiggerMax(posM, posN, crossBC, crossAC);
+                        System.out.println("lenght " + lenght);
+                        System.out.println("maxLenght " + maxLenght);
+                        System.out.println("pos1_answer " + pos1_answer.toString());
+                        System.out.println("pos2_answer " + pos2_answer.toString());
+                        System.out.println("pos1_cross " + pos1_cross.toString());
+                        System.out.println("pos2_cross " + pos2_cross.toString());
+                        System.out.println();
+                    } else if (crossAB != null && crossAC != null) {
+                        lineSegment = crossAB.subtract(crossAC);
+                        lenght = lineSegment.length();
+                        if (lenght > maxLenght) lenghtBiggerMax(posM, posN, crossAB, crossAC);
+                        System.out.println("lenght " + lenght);
+                        System.out.println("maxLenght " + maxLenght);
+                        System.out.println("pos1_answer " + pos1_answer.toString());
+                        System.out.println("pos2_answer " + pos2_answer.toString());
+                        System.out.println("pos1_cross " + pos1_cross.toString());
+                        System.out.println("pos2_cross " + pos2_cross.toString());
+                        System.out.println();
+                    }
                 }
             }
         }
         solved = true;
+        }
     }
-}
