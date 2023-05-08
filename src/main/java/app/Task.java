@@ -397,6 +397,8 @@ public class Task {
                 // прямая через них
                 if (posM != posN) {
                     Line line = new Line(posM, posN);
+                    System.out.println("posM " + posM.toString());
+                    System.out.println("posN " + posN.toString());
                     // точки пересечения со сторонами треугольника
                     Vector2d crossAB = null;
                     Vector2d crossBC = null;
@@ -409,7 +411,7 @@ public class Task {
                     }
                     if (crossLineSegment(line, lineBC, posB, posC)) {
                         crossBC = crossLine(line, lineBC);
-                        System.out.println("crossbc " + crossBC.toString());
+                        System.out.println("crossBC " + crossBC.toString());
                     }
                     if (crossLineSegment(line, lineAC, posA, posC)) {
                         crossAC = crossLine(line, lineAC);
