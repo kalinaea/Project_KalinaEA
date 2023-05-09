@@ -1,6 +1,7 @@
 package app;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -99,6 +100,13 @@ public class Task {
     Triangle triangle;
 
 
+    /**
+     * Задача
+     *
+     * @param ownCS  СК задачи
+     * @param points массив точек
+     */
+    @JsonCreator
     public Task(
             @JsonProperty("ownCS") CoordinateSystem2d ownCS,
             @JsonProperty("points") ArrayList<Point> points,

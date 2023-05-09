@@ -1,5 +1,6 @@
 package app;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import misc.Misc;
@@ -23,13 +24,14 @@ public class Point {
      *
      * @param pos     положение точки
      */
+    @JsonCreator
     public Point(@JsonProperty("pos") Vector2d pos) {
         this.pos = pos;
     }
 
 
     /**
-     * Получить цвет точки по её множеству
+     * Получить цвет точки
      *
      * @return цвет точки
      */

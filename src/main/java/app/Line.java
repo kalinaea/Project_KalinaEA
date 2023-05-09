@@ -1,5 +1,6 @@
 package app;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.github.humbleui.skija.Canvas;
@@ -26,6 +27,7 @@ public class Line {
      * @param pos2
      * положение прямой
      */
+    @JsonCreator
     public Line(@JsonProperty("pos") Vector2d pos1, Vector2d pos2) {
         this.pos1 = pos1;
         this.pos2 = pos2;

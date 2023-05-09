@@ -1,5 +1,6 @@
 package app;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.github.humbleui.skija.Canvas;
@@ -21,6 +22,7 @@ public class Triangle {
     @Getter
     public Vector2d pos3;
 
+    @JsonCreator
     Triangle(@JsonProperty("pos1") Vector2d pos1,
              @JsonProperty("pos2") Vector2d pos2,
              @JsonProperty("pos3") Vector2d pos3) {
@@ -31,7 +33,7 @@ public class Triangle {
 
     @Override
     public String toString() {
-        return "Straight{" +
+        return "Line{" +
                 ", pos1=" + pos1 + ", pos2=" + pos2 + ", pos3=" + pos3 +
                 '}';
     }
@@ -99,6 +101,4 @@ public class Triangle {
         Triangle triangle = new Triangle(pos1, pos2, pos3);
         return triangle;
     }
-
-
 }
