@@ -415,21 +415,21 @@ public class Task {
                     Vector2d lineSegment = null;
                     // если есть два пересечения со сторонами треугольника
                     if (crossAB != null && crossBC != null) {
-                        lineSegment = crossAB.subtract(crossBC);
+                        lineSegment = Vector2d.subtract(crossAB, crossBC);
                         lenght = lineSegment.length();
                         // если отрезок больше максимального
                         if (lenght > maxLenght) {
                             lenghtBiggerMax(posM, posN, crossAB, crossBC, lenght);
                         }
                     } else if (crossBC != null && crossAC != null) {
-                        lineSegment = crossBC.subtract(crossAC);
+                        lineSegment = Vector2d.subtract(crossBC, crossAC);
                         lenght = lineSegment.length();
                         if (lenght > maxLenght) {
                             lenghtBiggerMax(posM, posN, crossBC, crossAC, lenght);
                         }
 
                     } else if (crossAB != null && crossAC != null) {
-                        lineSegment = crossAB.subtract(crossAC);
+                        lineSegment = Vector2d.subtract(crossAB, crossAC);
                         lenght = lineSegment.length();
                         if (lenght > maxLenght) {
                             lenghtBiggerMax(posM, posN, crossAB, crossAC, lenght);
