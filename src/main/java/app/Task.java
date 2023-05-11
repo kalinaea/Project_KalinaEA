@@ -88,7 +88,7 @@ public class Task {
     Vector2d pos2_answer;
 
     /**
-     * точки пересечения с треугольником прямой в ответе
+     * точки пересечения с треугольником прямой из ответа
      */
     Vector2d pos1_cross;
     Vector2d pos2_cross;
